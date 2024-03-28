@@ -23,7 +23,8 @@ module.exports = async () => {
     )
 
     if (!redirectsRes.ok) {
-      throw new Error('Network response was not ok');
+      console.error('Error configuring redirects: Network response was not ok');
+      return [];
     }
 
     const redirectsData = await redirectsRes.json()
