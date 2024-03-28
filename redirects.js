@@ -22,11 +22,6 @@ module.exports = async () => {
       `${process.env.NEXT_PUBLIC_SERVER_URL}/api/redirects?limit=1000&depth=1`,
     )
 
-    if (!redirectsRes.ok) {
-      console.error('Error configuring redirects: Network response was not ok');
-      return [];
-    }
-
     const redirectsData = await redirectsRes.json()
     const { docs } = redirectsData
 
@@ -77,7 +72,10 @@ module.exports = async () => {
 
     return redirects
   } catch (error) {
-    console.error(`Error configuring redirects: ${error}`)
+    if (process.env.NODE_ENV === 'production') {
+      console.error(`Error configuring redirects: ${error}`) // eslint-disable-line no-console
+    }
+
     return []
   }
 }
