@@ -18,10 +18,9 @@ module.exports = async () => {
   }
 
   try {
-    const serverUrl = new URL(process.env.NEXT_PUBLIC_SERVER_URL);
-    const redirectsUrl = new URL('/api/redirects?limit=1000&depth=1', serverUrl);
-    
-    const redirectsRes = await fetch(redirectsUrl.toString())
+    const redirectsRes = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/redirects?limit=1000&depth=1`,
+    )
 
     const redirectsData = await redirectsRes.json()
     const { docs } = redirectsData
